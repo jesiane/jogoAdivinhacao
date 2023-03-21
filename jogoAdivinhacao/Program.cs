@@ -1,137 +1,88 @@
 ﻿using System.Net.Http.Headers;
 
 namespace jogoAdivinhacao
+{
+    internal class Program
     {
-        internal class Program
+        static void Main(string[] args)
         {
-            static void Main(string[] args)
+            Console.WriteLine("**********************************");
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("\r Bem vindo ao jogo de adivinhação");
+            Console.ResetColor();
+            Console.WriteLine("**********************************");
+            Console.WriteLine("Escolha o nivel de dificuldade ");
+            Console.WriteLine("(1) Facil - (2) Medio - (3) Dificil");
+            Console.Write("Escolha: ");
+            int escolha = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("***********************************");
+
+            int grau = 0, aleatorio = 0, pontuacao = 1000;
+            Random rand = new Random();
+            String nome;
+            int randomNumero = rand.Next(1, 20);
+            Console.WriteLine($"Teste Random número: {randomNumero}");
+
+            if (escolha == 1)
             {
-                Console.WriteLine("**********************************");
-                Console.WriteLine("\r Bem vindo ao jogo de adivinhação");
-                Console.WriteLine("**********************************");
-                Console.WriteLine("Escolha o nivel de dificuldade ");
-                Console.WriteLine("(1) - Facil (2) - Medio (3) - Dificil");
-                Console.WriteLine("Escolha: ");
-                int escolha = int.Parse(Console.ReadLine());
+                grau = 15;
+                Console.WriteLine($"O grau de dificuldade escolhido é Facil ");
+                Console.WriteLine($"Você possui {grau} chances");
 
-                Console.WriteLine("***********************************");
+            }
+            if (escolha == 2)
+            {
+                grau = 10;
+                Console.WriteLine($"O grau de dificuldade escolhido é Médio ");
+                Console.WriteLine($"Você possui {grau} chances");
 
-                int numero=0;
-                Random rand = new Random();
-                int randomNumero = rand.Next(1, 20);
-                Console.WriteLine($"Teste Random número: {randomNumero}");
+            }
+            if (escolha == 3)
+            {
+                grau = 5;
+                Console.WriteLine($"O grau de dificuldade escolhido é Dificil ");
+                Console.WriteLine($"Você possui {grau} chances");
+            }
 
-                /*  Dificuldade
-                 *  (1) Fácil = 15 chances
-                 *  (2) Médio = 10 chances
-                 *  (3) Difícil = 5 chances
-                */
-
-                /*
-                 * pontuação: (numero chutado – numero aleatório) / 2
-                 */
-                int pontuacao = 1000;
-
-                switch (escolha)
+            for (int i = 0; i < grau; i++)
                 {
-                    case 1:
-                        Console.WriteLine("\r ** Facil ** ");
-                        Console.WriteLine(" Possui 15 chances de acertar o numero ");
+                    Console.WriteLine("_________________________");
+                    Console.WriteLine($" Tentativa {i + 1} de {grau} ");
+                    Console.WriteLine("Seu palpite deve estar entre 1 e 20: ");
+                    aleatorio = int.Parse(Console.ReadLine());
 
-                        for (int i = 0; i < 15; i++)
-                        {
-                            Console.WriteLine("_________________________");
-                            Console.WriteLine($" Tentativa {i + 1} de 15 ");
-                            Console.WriteLine("Seu palpite: ");
-                            numero = int.Parse(Console.ReadLine());
+                if (aleatorio <= 20) {
 
-                            if (numero < randomNumero)
-                            {
-                                Console.WriteLine(" O numero aleatorio é maior");
-
-                            }
-                            else if (numero > randomNumero)
-                            {
-                                Console.WriteLine(" O numero aleatorio é menor");
-                            }
-                            else
-                            {
-                                Console.WriteLine($" Parabéns você acertou na {i + 1} tentativa ");
-
-                                break;
-                            }
-
-                            pontuacao -= (Math.Abs(numero - randomNumero)) / 2;
-                            //pontos = 1000 - pontuacao ;
-
-                            Console.WriteLine($" Pontuação {pontuacao}");
-
-
-                        }
-
+                    if (aleatorio < randomNumero)
+                    {
+                        Console.WriteLine(" O numero do sistema é maior");
+                    }
+                    else if (aleatorio > randomNumero)
+                    {
+                        Console.WriteLine(" O numero do sistema é menor");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($" Parabéns você acertou na {i + 1} tentativa ");
+                        Console.ResetColor();
                         break;
+                    }
 
-                    case 2:
-                        Console.WriteLine("\r ** Medio **");
-                        Console.WriteLine("Possui 10 chances de acertas o numero ");
-
-
-                        for (int i = 0; i < 10; i++)
-                        {
-                            Console.WriteLine("_________________________");
-                            Console.WriteLine($" Tentativa {i + 1} de 10 ");
-                            Console.WriteLine("Seu palpite: ");
-                            numero = int.Parse(Console.ReadLine());
-
-                            if (numero < randomNumero)
-                            {
-                                Console.WriteLine("O numero aleatorio é maior");
-                            }
-                            else if (numero > randomNumero)
-                            {
-                                Console.WriteLine("O numero é menor");
-                            }
-                            else
-                            {
-                                Console.WriteLine($" Parabéns você acertou na {i + 1} tentativa ");
-                            }
-                        break;
-                        }
-
-                        break;
-                    case 3:
-                        Console.WriteLine("\r ** Dificil **");
-                        Console.WriteLine("Possui 5 chances de acertas o numero ");
-
-                        for (int i = 0; i < 5; i++)
-                        {
-                            Console.WriteLine("_________________________");
-                            Console.WriteLine($" Tentativa {i + 1} de 5 ");
-                            Console.WriteLine("Seu palpite: ");
-                            numero = int.Parse(Console.ReadLine());
-
-                            Console.WriteLine($"Tentativa numero {i}");
-                            Console.WriteLine("_________________________");
-
-                            if (numero < randomNumero)
-                            {
-                                Console.WriteLine("O numero aleatorio é maior");
-                            }
-                            else if (numero > randomNumero)
-                            {
-                                Console.WriteLine("O numero é menor");
-                            }
-                            else
-                            {
-                                Console.WriteLine($" Parabéns você acertou na {i + 1} tentativa ");
-                            }
-                        }
-                        break;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Os numeros devem ser menores ou igual a 20");
+                    Console.ResetColor();
                 }
 
-              pontuacao = (Math.Abs(numero - randomNumero)/2);
-              Console.WriteLine($" A pontuação é {pontuacao}");
 
+            }
+           
+                pontuacao = (Math.Abs(aleatorio - randomNumero) / 2);
+                Console.WriteLine($"A pontuação é {pontuacao}");
         }
-    }
-    }
+    }  
+}

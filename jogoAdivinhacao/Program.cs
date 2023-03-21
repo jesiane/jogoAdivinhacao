@@ -18,9 +18,11 @@ namespace jogoAdivinhacao
 
             Console.WriteLine("***********************************");
 
-            int grau = 0, aleatorio = 0, pontuacao = 1000;
+            int grau = 0;
+            int aleatorio = 0;
+            double pontuacao = 1000;
+            double pontosperdidos = 0;
             Random rand = new Random();
-            String nome;
             int randomNumero = rand.Next(1, 20);
             Console.WriteLine($"Teste Random número: {randomNumero}");
 
@@ -29,14 +31,12 @@ namespace jogoAdivinhacao
                 grau = 15;
                 Console.WriteLine($"O grau de dificuldade escolhido é Facil ");
                 Console.WriteLine($"Você possui {grau} chances");
-
             }
             if (escolha == 2)
             {
                 grau = 10;
                 Console.WriteLine($"O grau de dificuldade escolhido é Médio ");
                 Console.WriteLine($"Você possui {grau} chances");
-
             }
             if (escolha == 3)
             {
@@ -57,32 +57,33 @@ namespace jogoAdivinhacao
                     if (aleatorio < randomNumero)
                     {
                         Console.WriteLine(" O numero do sistema é maior");
+                        pontosperdidos = (Math.Abs(aleatorio - randomNumero)) / 2;
+                        Console.WriteLine($"Pontos perdidos {pontosperdidos}");
                     }
                     else if (aleatorio > randomNumero)
                     {
                         Console.WriteLine(" O numero do sistema é menor");
+                        pontosperdidos = (Math.Abs(aleatorio - randomNumero)) / 2;
+                        Console.WriteLine($"Pontos perdidos {pontosperdidos}");
+
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine($" Parabéns você acertou na {i + 1} tentativa ");
                         Console.ResetColor();
+                        Console.WriteLine($"A pontuação é {pontuacao}");
                         break;
                     }
-
+                    pontuacao -= (Math.Abs(aleatorio - randomNumero)) / 2;
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Os numeros devem ser menores ou igual a 20");
-                    Console.ResetColor();
+                    Console.ResetColor();                   
                 }
-
-
             }
-           
-                pontuacao = (Math.Abs(aleatorio - randomNumero) / 2);
-                Console.WriteLine($"A pontuação é {pontuacao}");
-        }
+         }
     }  
 }
